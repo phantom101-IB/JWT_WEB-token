@@ -1,7 +1,6 @@
 class CustomeAPIError extends Error {
-  constructor(message, StatusCode) {
+  constructor(message) {
     super(message);
-    this.StatusCode = StatusCode;
   }
 }
 

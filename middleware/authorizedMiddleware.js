@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
+const { unauthorizedError } = require("../errors");
 
 const authorizationMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    // throw new CustomeAPIError("No token Available", 400);
-    res.json({ msg: "No Token Available" });
+    throw new unauthorizedError("No token Available");
+    // res.json({ msg: "No Token Available" });
   } else {
     token = authHeader.split(" ")[1];
     try {
@@ -14,7 +15,7 @@ const authorizationMiddleware = (req, res, next) => {
       req.user = { id, username };
       next();
     } catch (error) {
-      throw new CustomeAPIError("Invalid Token", 401);
+      throw new unauthorizedError("Invalid Token");
     }
   }
 };
